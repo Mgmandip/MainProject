@@ -14,11 +14,17 @@ exports.register = async (req, res) => {
 
   try {
     let user = await User.findOne({ email });
+
     if (user) {
       return res.status(400).json({ msg: 'User already exists' });
     }
 
-    user = new User({ name, email, password, role });
+    user = new User({
+       name,
+       email,
+       password,
+       role 
+      });
     await user.save();
 
     // Create Profile for the new User
@@ -29,7 +35,7 @@ exports.register = async (req, res) => {
 
     jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' }, (err, token) => {
       if (err) throw err;
-      res.json({ token });
+      res.json({msg:"Register in Sucessfully", token, userDetails:user, role: user.role });
     });
   } catch (error) {
     console.error(error.message);
@@ -52,12 +58,22 @@ exports.login = async (req, res) => {
       return res.status(400).json({ msg: 'Invalid credentials' });
     }
 
-    const payload = { user: { id: user.id } };
+    const payload = {
+      user: {
+        id: user.id,
+        role: user.role,
+      } 
+    };
 
-    jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' }, (err, token) => {
-      if (err) throw err;
-      res.json({ token });
-    });
+    jwt.sign(
+      payload,
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' },
+       (err, token) => {
+          if (err) throw err;
+          res.json({msg:"Logged in Sucessfully", token, userDetails:user, role: user.role });
+        }
+      );
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Server error');

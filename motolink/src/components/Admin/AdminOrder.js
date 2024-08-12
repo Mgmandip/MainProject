@@ -3,7 +3,7 @@ import axios from 'axios';
 import HomeImage from './Home.png';
 import Navbar from '../Navbar/NavbarComponent';
 
-const AdminUser = () => {
+const AdminOrder = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -49,4 +49,4 @@ const AdminUser = () => {
   );
 };
 
-export default AdminUser;
+export default AdminOrder;

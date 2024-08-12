@@ -9,7 +9,9 @@ const path = require('path');
 
 const bikeRoutes = require('./src/Routes/bikeRoute');
 const profileRoutes = require("./src/Routes/profileRoute");
-const authRoutes = require('./src/Routes/authRoute'); // Correct import
+const authRoutes = require('./src/Routes/authRoute'); 
+const cartRoutes = require('./src/Routes/cartRoute'); 
+const checkoutRoutes = require('./src/Routes/paymentRoute'); 
 
 dotenv.config();
 
@@ -28,6 +30,8 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/profile', profileRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/bikes', bikeRoutes);
+app.use('/api/cart', cartRoutes);
+app.use('/api/payment', checkoutRoutes);
 
 const PORT = process.env.PORT || 5000;
 

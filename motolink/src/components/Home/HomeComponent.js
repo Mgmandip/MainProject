@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HomeImage from './Home.png';
 import Navbar from '../Navbar/NavbarComponent';
@@ -6,6 +6,15 @@ import HomeBikeImage from './HomeBike.png';
 
 const HomeComponent = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const role = localStorage.getItem('userRole');
+    if (!role) {
+      navigate('/login');
+    } else if (role === 'admin') {
+      navigate('/admin/');
+    }
+  }, [navigate]);
 
   const handleExploreMore = () => {
     navigate('/models');
