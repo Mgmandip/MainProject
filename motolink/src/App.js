@@ -56,7 +56,54 @@
 
 // export default App;
 
-import React from 'react';
+// import React from 'react';
+// import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+// import Navbar from './components/Navbar/NavbarComponent';
+// import HomeComponent from './components/Home/HomeComponent';
+// import ContactComponent from './components/Contact/ContactComponent';
+// import ModelsComponent from './components/Shop/ModelsComponent';
+// import ModelsDetail from './components/Shop/ModelsDetail';
+// import CartComponent from './components/Cart/CartComponent';
+// import ProfileComponent from './components/Profile/ProfileComponent';
+// import CheckoutComponent from './components/Checkout/CheckoutComponent';
+// import Login from './components/Authentication/login';
+// import Registration from './components/Authentication/Register';
+// import AdminDashboard from './components/Admin/AdminDashboard';
+// import AdminUser from './components/Admin/AdminUser';
+// import AdminBike from './components/Admin/AdminBike';
+// import AdminOrder from './components/Admin/AdminOrder';
+// import ProtectedRoute from './protectedRoutes/protectedRoute';
+
+// const App = () => {
+//   return (
+//     <Router>
+//       <Navbar />
+//       <Routes>
+        // <Route path="/" element={<HomeComponent />} />
+        // <Route path="/models" element={<ModelsComponent />} />
+        // <Route path="/cart" element={<ProtectedRoute><CartComponent /></ProtectedRoute>} />
+        // <Route path="/contact" element={<ContactComponent />} />
+        // <Route path="/profile" element={<ProtectedRoute><ProfileComponent /></ProtectedRoute>} />
+        // <Route path="/register" element={<Registration />} />
+        // <Route path="/login" element={<Login />} />
+        // <Route path="/modelsDetail/:id" element={<ProtectedRoute><ModelsDetail /></ProtectedRoute>} />
+        // <Route path="/checkout/:id" element={<ProtectedRoute><CheckoutComponent /></ProtectedRoute>} />
+
+        // <Route path="/admin" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
+        // <Route path="/adminbike" element={<ProtectedRoute role="admin"><AdminBike /></ProtectedRoute>} />
+        // <Route path="/adminuser" element={<ProtectedRoute role="admin"><AdminUser /></ProtectedRoute>} />
+        // <Route path="/adminorder" element={<ProtectedRoute role="admin"><AdminOrder /></ProtectedRoute>} />
+//       </Routes>
+//     </Router>
+//   );
+// };
+
+// export default App;
+
+
+
+import "./App.css";
+import React, { Component } from "react";
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar/NavbarComponent';
 import HomeComponent from './components/Home/HomeComponent';
@@ -72,31 +119,39 @@ import AdminDashboard from './components/Admin/AdminDashboard';
 import AdminUser from './components/Admin/AdminUser';
 import AdminBike from './components/Admin/AdminBike';
 import AdminOrder from './components/Admin/AdminOrder';
+import AdminInquiry from './components/Admin/AdminInquiry';
 import ProtectedRoute from './protectedRoutes/protectedRoute';
+import UserOrder from "./components/Order/UserOrder";
 
-const App = () => {
-  return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<HomeComponent />} />
-        <Route path="/models" element={<ModelsComponent />} />
-        <Route path="/cart" element={<ProtectedRoute role="user"><CartComponent /></ProtectedRoute>} />
-        <Route path="/contact" element={<ContactComponent />} />
-        <Route path="/profile" element={<ProfileComponent />} />
-        <Route path="/register" element={<Registration />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/modelsDetail/:id" element={<ModelsDetail />} />
-        <Route path="/checkout/:id" element={<CheckoutComponent />} />
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <div>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<HomeComponent />} />
+            <Route path="/models" element={<ModelsComponent />} />
+            <Route path="/cart" element={<ProtectedRoute role="user"><CartComponent /></ProtectedRoute>} />
+            <Route path="/contact" element={<ProtectedRoute role="user"><ContactComponent /></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><ProfileComponent /></ProtectedRoute>} />
+            <Route path="/register" element={<Registration />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/modelsDetail/:id" element={<ModelsDetail />}/>
+            <Route path="/checkout/:id" element={<ProtectedRoute><CheckoutComponent /></ProtectedRoute>} />
+            <Route path="/userorder" element={<ProtectedRoute role="user"><UserOrder /></ProtectedRoute>} />
 
-        <Route path="/admin" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
-        <Route path="/adminbike" element={<ProtectedRoute role="admin"><AdminBike /></ProtectedRoute>} />
-        <Route path="/adminuser" element={<ProtectedRoute role="admin"><AdminUser /></ProtectedRoute>} />
-        <Route path="/adminorder" element={<ProtectedRoute role="admin"><AdminOrder /></ProtectedRoute>} />
-      </Routes>
-    </Router>
-  );
-};
+            <Route path="/admin" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
+            <Route path="/adminbike" element={<ProtectedRoute role="admin"><AdminBike /></ProtectedRoute>} />
+            <Route path="/adminuser" element={<ProtectedRoute role="admin"><AdminUser /></ProtectedRoute>} />
+            <Route path="/adminorder" element={<ProtectedRoute role="admin"><AdminOrder /></ProtectedRoute>} />
+            <Route path="/admininquiry" element={<ProtectedRoute role="admin"><AdminInquiry /></ProtectedRoute>} />
+          </Routes>
+        </div>
+      </Router>
+    );
+  }
+}
 
 export default App;
 

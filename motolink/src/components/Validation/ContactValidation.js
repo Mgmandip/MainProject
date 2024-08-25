@@ -34,7 +34,7 @@ const ContactValidation = () => {
     <div className="flex justify-center my-5">
       <form onSubmit={handleSubmit} className="  ">
         <div>
-          <label for="name" className="text-lg text-blue-950 font-bold">
+          <label for="name" className="text-lg text-zz-950 font-bold">
             Name:
           </label>{" "}
           <br />

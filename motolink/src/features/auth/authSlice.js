@@ -1,9 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  isAuthenticated: false,
-  userRole: null,
-  token: null,
+  // isAuthenticated: false,
+  // userRole: null,
+  // token: null,
+
+  isAuthenticated: !!localStorage.getItem('token'), // Check if there's a token in localStorage
+  userRole: localStorage.getItem('userRole'), // Retrieve user role from localStorage
+  token: localStorage.getItem('token'), // Retrieve token from localStorage
 };
 
  
@@ -21,6 +25,7 @@ const authSlice = createSlice({
       state.userRole = null;
       state.token = null;
       localStorage.removeItem('token');
+      console.log('Token Removed', localStorage);
     },
     setToken(state, action) {
       state.token = action.payload.token;

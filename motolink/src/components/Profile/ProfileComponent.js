@@ -6,9 +6,9 @@ import axios from 'axios';
 
 const ProfileComponent = () => {
   const [profile, setProfile] = useState({
-    fullName: '',
+    name: '',
     address: '',
-    dob: '',
+    dateOfBirth: '',
     phoneNumber: '',
     country: '',
     city: '',
@@ -17,28 +17,30 @@ const ProfileComponent = () => {
     password: ''
   });
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/profile/', {
+        const res = await axios.get('http://localhost:5000/api/profile', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
         });
-        const profileData = res.data;
-        // Update the profile state with the fetched data
+        const profileData = res.data.profile;
+        console.log('Profile Data:', profileData);
         setProfile({
-          fullName: profileData.fullName || '',
+          name: profileData.user?.name || '',
           address: profileData.address || '',
-          dob: profileData.dob || '',
+          dateOfBirth: profileData.dateOfBirth || '',
           phoneNumber: profileData.phoneNumber || '',
           country: profileData.country || '',
           city: profileData.city || '',
           zipCode: profileData.zipCode || '',
-          email: profileData.email || '',
-          password: '' // Never prefill password for security reasons
+          email: profileData.user?.email || '',
+          // password: '' // Do not pre-fill the password field for security reasons
         });
+        setError('');
       } catch (err) {
         setError('Failed to load user profile');
         console.error(err);
@@ -56,6 +58,25 @@ const ProfileComponent = () => {
     });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    try {
+      const response = await axios.put('http://localhost:5000/api/profile/update', profile, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      setSuccessMessage('Profile updated successfully!');
+      setError('');
+    } catch (err) {
+      setError('Failed to update profile');
+      console.error(err);
+    }
+  };
+  
+
   return (
     <div className="relative h-screen" style={{ backgroundImage: `url(${ProfileImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
       <div className="absolute w-full z-20">
@@ -65,7 +86,7 @@ const ProfileComponent = () => {
         <label className='text-2xl font-medium text-white'>Profile</label>
       </div>
 
-      <div className='flex'>
+      <form onSubmit={handleSubmit} className='flex'>
         <div className='space-y-10 mt-14'>
           <label className='flex ml-52 text-1xl font-medium text-white'>Full Name</label>
           <label className='flex ml-52 text-1xl font-medium text-white'>Address</label>
@@ -76,14 +97,14 @@ const ProfileComponent = () => {
           <label className='flex ml-52 text-1xl font-medium text-white'>Zip Code</label>
         </div>
 
-        <div className='space-y-7 mt-14 ml-16 '>
-          <input className='flex border-0 border-b-2 w-72 text-white border-gray-300 bg-transparent focus:ring-0 outline-none p-1' type='text' name="fullName" value={profile.fullName} onChange={handleChange} />
-          <input className='flex border-0 border-b-2 w-72 text-white border-gray-300 bg-transparent focus:ring-0 outline-none p-1' type='text' name="address" value={profile.address} onChange={handleChange} />
-          <input className='flex border-0 border-b-2 w-72 text-white border-gray-300 bg-transparent focus:ring-0 outline-none p-1' type='text' name="dob" value={profile.dob} onChange={handleChange} />
-          <input className='flex border-0 border-b-2 w-72 text-white border-gray-300 bg-transparent focus:ring-0 outline-none p-1' type='text' name="phoneNumber" value={profile.phoneNumber} onChange={handleChange} />
-          <input className='flex border-0 border-b-2 w-72 text-white border-gray-300 bg-transparent focus:ring-0 outline-none p-1' type='text' name="country" value={profile.country} onChange={handleChange} />
-          <input className='flex border-0 border-b-2 w-72 text-white border-gray-300 bg-transparent focus:ring-0 outline-none p-1' type='text' name="city" value={profile.city} onChange={handleChange} />
-          <input className='flex border-0 border-b-2 w-72 text-white border-gray-300 bg-transparent focus:ring-0 outline-none p-1' type='text' name="zipCode" value={profile.zipCode} onChange={handleChange} />
+        <div className='space-y-7 mt-14 ml-16'>
+          <input className='flex border-0 border-b-2 w-72 text-white border-gray-300 bg-transparent focus:ring-0 outline-none p-1' type='text' name="name" value={profile.name} onChange={handleChange} required />
+          <input className='flex border-0 border-b-2 w-72 text-white border-gray-300 bg-transparent focus:ring-0 outline-none p-1' type='text' name="address" value={profile.address} onChange={handleChange} required />
+          <input className='flex border-0 border-b-2 w-72 text-white border-gray-300 bg-transparent focus:ring-0 outline-none p-1' type='text' name="dateOfBirth" value={profile.dateOfBirth} onChange={handleChange} required />
+          <input className='flex border-0 border-b-2 w-72 text-white border-gray-300 bg-transparent focus:ring-0 outline-none p-1' type='text' name="phoneNumber" value={profile.phoneNumber} onChange={handleChange} required />
+          <input className='flex border-0 border-b-2 w-72 text-white border-gray-300 bg-transparent focus:ring-0 outline-none p-1' type='text' name="country" value={profile.country} onChange={handleChange} required />
+          <input className='flex border-0 border-b-2 w-72 text-white border-gray-300 bg-transparent focus:ring-0 outline-none p-1' type='text' name="city" value={profile.city} onChange={handleChange} required />
+          <input className='flex border-0 border-b-2 w-72 text-white border-gray-300 bg-transparent focus:ring-0 outline-none p-1' type='text' name="zipCode" value={profile.zipCode} onChange={handleChange} required />
         </div>
 
         <div className='space-y-10'>
@@ -91,26 +112,27 @@ const ProfileComponent = () => {
 
           <div className='space-y-10'>
             <label className='flex ml-52 text-1xl font-medium text-white mt-14'>Email</label>
-            <label className='flex ml-52 text-1xl font-medium text-white mt-14'>Password</label>
+            {/* <label className='flex ml-52 text-1xl font-medium text-white mt-14'>Password</label> */}
           </div>
         </div>
 
         <div className='space-y-7 mt-52 ml-16'>
-          <input className='flex border-0 border-b-2 w-72 text-white border-gray-300 bg-transparent focus:ring-0 outline-none p-1' type='text' name="email" value={profile.email} onChange={handleChange}></input>
-          <input className='flex border-0 border-b-2 w-72 text-white border-gray-300 bg-transparent focus:ring-0 outline-none p-1' type='password' name="password" value={profile.password} onChange={handleChange}></input>
+          <input className='flex border-0 border-b-2 w-72 text-white border-gray-300 bg-transparent focus:ring-0 outline-none p-1' type='text' name="email" value={profile.email} onChange={handleChange} disabled />
+          {/* <input className='flex border-0 border-b-2 w-72 text-white border-gray-300 bg-transparent focus:ring-0 outline-none p-1' type='password' name="password" value={profile.password} onChange={handleChange} /> */}
 
           <div className='pt-10'>
-            <button className="bg-red-700 text-white text-2xl px-5 py-2 rounded-lg z-10">Save</button>
+            <button type="submit" className="bg-red-700 text-white text-2xl px-5 py-2 rounded-lg z-10">Save</button>
           </div>
         </div>
-      </div>
+      </form>
+
+      {error && <p className="text-red-500 text-center mt-4">{error}</p>}
+      {successMessage && <p className="text-green-500 text-center mt-4">{successMessage}</p>}
     </div>
   );
 };
 
 export default ProfileComponent;
-
-
 
 
 // import React, { useState, useEffect, useCallback } from 'react';

@@ -379,7 +379,6 @@
 
 // export default AdminBike;
 
-
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeImage from './Home.png';
@@ -460,7 +459,6 @@ const AdminBike = () => {
     }
   };
 
-
   const handleDelete = async () => {
     if (!editingBike) return;
 
@@ -484,8 +482,6 @@ const AdminBike = () => {
       toast.error(error.response?.data?.msg || "An error occurred");
     }
   };
-
-  
 
   const fetchBikes = useCallback(async () => {
     try {
@@ -529,7 +525,7 @@ const AdminBike = () => {
       </div>
       <div className="flex items-center justify-center h-full">
         {/* Form Section */}
-        <div className="bg-white bg-opacity-75 p-8 rounded-lg shadow-lg mt-20 h-auto w-3/5 ml-4 ">
+        <div className="bg-white bg-opacity-75 p-8 rounded-lg shadow-lg mt-20 h-auto w-3/5 ml-16 ">
           <form onSubmit={handleSubmit}>
             <div className='flex space-x-10'>
               <div className='space-y-9 mt-5 ml-16'>
@@ -553,8 +549,6 @@ const AdminBike = () => {
                 <input name="saftey" value={formData.saftey} onChange={handleChange} className='flex border border-gray-600 rounded-lg w-72 bg-transparent focus:ring-0 outline-none p-1' type='text' placeholder='Enter bike safety' />
                 <input type="file" name="bikeImage" onChange={handleFileChange} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
                 <div className="space-x-2">
-                  {/* <button type="submit" className="bg-black text-white text-base px-6 py-1 rounded-lg z-10">{editingBike ? 'Update' : 'Add'}</button> */}
-
                   {editingBike && (
                     <>
                       <button type="submit" className="bg-black text-white text-base px-6 py-1 rounded-lg z-10">Update</button>
@@ -570,25 +564,31 @@ const AdminBike = () => {
           </form>
         </div>
 
-        {/* Bike List Section */}
-        <div className="flex flex-wrap justify-center space-x-10 mt-12 w-4/5">
-          {bikes.map((bike) => (
-            <div key={bike.name} className="flex flex-col items-center">
+        <div className="w-4/5 mt-12">
+          <div className="grid grid-cols-2 ml-28"> 
+            {bikes.map((bike) => (
+            <div key={bike._id} className="flex flex-col items-center p-1 m-0"> {/* Minimal padding and margin */}
               <img
                 onClick={() => handleExploreMore(bike._id)}
                 src={bike.bikeImage}
                 alt={bike.name}
-                className="h-40 z-0 transition-transform transform hover:scale-110"
+                className=" h-40 transition-transform transform hover:scale-105" /* Reduced hover effect */
               />
               <label
                 onClick={() => handleEdit(bike)}
-                className="text-2xl font-bold text-gray-800 mt-2 cursor-pointer"
+                className="text-xl font-bold text-gray-800 mt-1 cursor-pointer" /* Smaller text and reduced margin */
               >
-                {bike.name}
+              {bike.name}
               </label>
-            </div>
-          ))}
-        </div>
+          </div>
+    ))}
+  </div>
+</div>
+
+
+
+
+
       </div>
     </div>
   );

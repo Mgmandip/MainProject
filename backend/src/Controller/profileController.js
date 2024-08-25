@@ -7,31 +7,36 @@ const sendErrorResponse = (res, error) => {
 };
 
 // Update user profile as it is created during registration
+// src/Controller/profileController.js
+
 const updateUserProfile = async (req, res) => {
   try {
-    const { bio } = req.body;
-    let updateData = { bio };
+    const { name, address, dateOfBirth, phoneNumber, country, city, zipCode } = req.body;
 
-    if (req.file) {
-      const profileImage = `${domain}/uploads/profiles/${req.file.filename}`;
-      updateData.profileImage = profileImage;
-    }
-
-    const profile = await UserProfiles.findOneAndUpdate(
-      { user: req.user.id },
-      updateData,
+    const updatedProfile = await UserProfiles.findOneAndUpdate(
+      { user: req.user.id }, 
+      { 
+        name, 
+        address, 
+        dateOfBirth, 
+        phoneNumber, 
+        country, 
+        city, 
+        zipCode 
+      }, 
       { new: true, runValidators: true }
     );
 
-    if (!profile) {
+    if (!updatedProfile) {
       return res.status(404).json({ msg: "Profile not found" });
     }
 
-    res.status(200).json({ profile });
+    res.status(200).json({ profile: updatedProfile });
   } catch (error) {
-    sendErrorResponse(res, error);
+    res.status(500).json({ msg: "Failed to update profile", error: error.message });
   }
 };
+
 
 // Get user profile
 const getUserProfile = async (req, res) => {

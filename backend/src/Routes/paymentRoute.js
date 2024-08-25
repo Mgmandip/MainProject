@@ -40,12 +40,33 @@
 // module.exports = router;
 
 
+// const express = require('express');
+// const router = express.Router();
+// const authMiddleware = require('../Middleware/authMiddleware');
+// const { paymentBike } = require('../Controller/paymentController');
+
+// // Route for making a payment
+// router.post('/payment', authMiddleware, paymentBike);
+
+// module.exports = router;
+
+
+// const express = require('express');
+// const { paymentBike } = require('../Controller/paymentController');
+// const authMiddleware = require('../Middleware/authMiddleware');
+
+// const router = express.Router();
+
+// router.post('/add', authMiddleware, paymentBike);
+
+// module.exports = router;
+
+
 const express = require('express');
 const router = express.Router();
-const authMiddleware = require('../Middleware/authMiddleware');
-const { paymentBike } = require('../Controller/paymentController');
+const { createCheckout } = require('../Controller/paymentController'); // Adjust the path as needed
+const authenticate = require('../Middleware/authMiddleware'); // Adjust the path as needed
 
-// Route for making a payment
-router.post('/payment', authMiddleware, paymentBike);
+router.post('/checkout', authenticate, createCheckout); // When payment is successful, both checkout and order are created
 
 module.exports = router;

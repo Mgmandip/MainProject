@@ -4,6 +4,7 @@ import Navbar from '../Navbar/NavbarComponent';
 import Bike from './Bike.png';
 import User from './User.png';
 import Orders from './Orders.png';
+import Inquiry from './Inquiry.png';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -22,6 +23,9 @@ const AdminDashboard = () => {
     navigate('/adminorder');
   };
 
+  const handleInquiry = () => {
+    navigate('/AdminInquiry');
+  };
 
   return (
     <div className="relative h-screen" style={{ backgroundImage: `url(${HomeImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
@@ -42,6 +46,11 @@ const AdminDashboard = () => {
         <div className='h-60 w-72 text-2xl text-center font-bold bg-gray-300 rounded-2xl bg-opacity-70 shadow-lg shadow-slate-950'>
           <img src={Orders} onClick={handleOrders} alt="Home Bike" className="h-3/4 z-0 ml-16 mt-2 transition-transform transform hover:scale-110" />
           <label className='text-xl text-gray-700'>Orders</label>
+        </div>
+
+        <div className='h-60 w-72 text-2xl text-center font-bold bg-gray-300 rounded-2xl bg-opacity-70 shadow-lg shadow-slate-950'>
+          <img src={Inquiry} onClick={handleInquiry} alt="Home Bike" className="h-2/3 z-0 ml-16 mt-7 transition-transform transform hover:scale-110" />
+          <label className='text-xl text-gray-700'>Inquiry</label>
         </div>
       </div>
     </div>

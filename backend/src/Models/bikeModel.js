@@ -4,8 +4,7 @@ const {Schema}=mongoose;
 const bikeSchema=new Schema({
     name:{
         type:String,
-        required:true,
-        unique: true,
+        required:true
     },
     price:{
         type:String,
