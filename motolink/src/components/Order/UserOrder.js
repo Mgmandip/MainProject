@@ -62,7 +62,6 @@ const UserOrder = () => {
           <table className="min-w-full bg-white rounded-2xl">
             <thead className="rounded-2xl">
               <tr className="bg-red-500">
-                <th className="py-2 px-4 border-b">User</th>
                 <th className="py-2 px-4 border-b">Bike Name</th>
                 <th className="py-2 px-4 border-b">Price</th>
                 <th className="py-2 px-4 border-b">Status</th>
@@ -76,9 +75,6 @@ const UserOrder = () => {
                     onClick={() => handleOrderClick(order._id)}
                     className="cursor-pointer hover:bg-gray-200"
                   >
-                    <td className="py-2 px-4 border-b">
-                      {order.user?.name || 'Unknown User'}
-                    </td>
                     <td className="py-2 px-4 border-b">
                       {order.bike?.name || 'Unknown Bike'}
                     </td>
@@ -111,7 +107,7 @@ const UserOrder = () => {
                             <strong>Address:</strong> {order.profile?.address || 'N/A'}
                           </p>
                           <p>
-                            <strong>Phone Number:</strong> {order.user?.number || 'N/A'}
+                            <strong>Phone Number:</strong> {order.profile?.phoneNumber || 'N/A'}
                           </p>
                           <p>
                             <strong>Order Status:</strong> {order.status}

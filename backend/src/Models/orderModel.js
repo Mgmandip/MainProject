@@ -3,13 +3,18 @@ const mongoose = require('mongoose');
 const orderSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',  // Make sure User model exists
+    ref: 'User',  
     required: true,
   },
   bike: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Bike',  // Make sure Bike model exists
+    ref: 'Bike',  
     required: true,
+  },
+  profile: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Profile',
+    required: true
   },
   status: {
     type: String,

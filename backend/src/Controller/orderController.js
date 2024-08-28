@@ -7,6 +7,7 @@ exports.createOrder = async (req, res) => {
   try {
     const { bikeId } = req.body;
     const userId = req.user.id;
+    const profileId = req.profile.id;
 
     // Check if bike exists
     const bike = await Bike.findById(bikeId);
@@ -16,8 +17,9 @@ exports.createOrder = async (req, res) => {
 
     // Create new order
     const newOrder = new Order({
-      user: mongoose.Types.ObjectId(userId),  // Ensure user is an ObjectId
-      bike: mongoose.Types.ObjectId(bikeId),  // Ensure bike is an ObjectId
+      user: mongoose.Types.ObjectId(userId),  
+      bike: mongoose.Types.ObjectId(bikeId),
+      profile: mongoose.Types.ObjectId(profileId),    
       status: 'Pending',
     });
 
@@ -32,7 +34,7 @@ exports.createOrder = async (req, res) => {
 // Get all orders (admin only)
 exports.getOrders = async (req, res) => {
   try {
-    const orders = await Order.find().populate('bike user');
+    const orders = await Order.find().populate('bike user profile');
     res.status(200).json(orders);
   } catch (error) {
     console.error('Error fetching orders:', error);
@@ -71,7 +73,7 @@ exports.updateOrder = async (req, res) => {
 exports.getUserOrders = async (req, res) => {
   try {
     const userId = req.user.id;
-    const orders = await Order.find({ user: userId }).populate('bike user');
+    const orders = await Order.find({ user: userId }).populate('bike user profile');
     res.status(200).json(orders);
   } catch (error) {
     console.error('Error fetching orders:', error);

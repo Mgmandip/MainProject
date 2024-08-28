@@ -177,36 +177,36 @@ const CheckoutComponent = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const checkProfileCompletion = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:5000/api/profile', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        const profileData = response.data.profile;
+  // useEffect(() => {
+  //   const checkProfileCompletion = async () => {
+  //     try {
+  //       const token = localStorage.getItem('token');
+  //       const response = await axios.get('http://localhost:5000/api/profile', {
+  //         headers: {
+  //           'Authorization': `Bearer ${token}`
+  //         }
+  //       });
+  //       const profileData = response.data.profile;
         
-        const requiredFields = ['name', 'address', 'dateOfBirth', 'phoneNumber', 'country', 'city', 'zipCode'];
-        const isComplete = requiredFields.every(field => profileData[field] && profileData[field].trim() !== '');
+  //       const requiredFields = ['name', 'address', 'dateOfBirth', 'phoneNumber', 'country', 'city', 'zipCode'];
+  //       const isComplete = requiredFields.every(field => profileData[field] && profileData[field].trim() !== '');
         
-        setIsProfileComplete(isComplete);
+  //       setIsProfileComplete(isComplete);
         
-        if (!isComplete) {
-          setErrorMessage('Please complete your profile before proceeding with payment.');
-          setTimeout(() => {
-            navigate('/profile');
-          }, 3000);
-        }
-      } catch (error) {
-        console.error('Error checking profile completion:', error);
-        setErrorMessage('Error checking profile. Please try again.');
-      }
-    };
+  //       if (!isComplete) {
+  //         setErrorMessage('Please complete your profile before proceeding with payment.');
+  //         setTimeout(() => {
+  //           navigate('/profile');
+  //         }, 3000);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error checking profile completion:', error);
+  //       setErrorMessage('Error checking profile. Please try again.');
+  //     }
+  //   };
 
-    checkProfileCompletion();
-  }, [navigate]);
+  //   checkProfileCompletion();
+  // }, [navigate]);
 
   useEffect(() => {
     const fetchBike = async () => {
@@ -227,13 +227,13 @@ const CheckoutComponent = () => {
 
   const handlePaymentSubmit = async (e) => {
     e.preventDefault();
-    if (!isProfileComplete) {
-      setErrorMessage('Please complete your profile before proceeding with payment.');
-      setTimeout(() => {
-        navigate('/profile');
-      }, 3000);
-      return;
-    }
+    // if (!isProfileComplete) {
+    //   setErrorMessage('Please complete your profile before proceeding with payment.');
+    //   setTimeout(() => {
+    //     navigate('/profile');
+    //   }, 3000);
+    //   return;
+    // }
 
     try {
       const token = localStorage.getItem('token');
@@ -352,11 +352,11 @@ const CheckoutComponent = () => {
         </div>
       )}
 
-      {!isProfileComplete && (
+      {/* {!isProfileComplete && (
         <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded-lg">
           Your profile is incomplete. You will be redirected to complete it.
         </div>
-      )}
+      )} */}
     </div>
   );
 };

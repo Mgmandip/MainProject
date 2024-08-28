@@ -26,11 +26,25 @@ const HomeComponent = () => {
         <Navbar />
       </div>
       <div className="flex flex-col items-center justify-center h-full relative">
-        <div className="absolute font-bold z-10 text-white text-9xl" style={{ color: 'transparent', WebkitTextStroke: '2px white', fontSize: '160px' }}>
+        <div
+          className="absolute font-bold z-10 text-white"
+          style={{
+            color: 'transparent',
+            WebkitTextStroke: '2px white',
+            fontSize: '10vw', // Responsive font size
+            maxWidth: '90%',  // Prevents overflow on smaller screens
+            textAlign: 'center',
+          }}
+        >
           MotoLink
         </div>
-        <img src={HomeBikeImage} alt="Home Bike" className="h-4/6 z-0" />
-        <button onClick={handleExploreMore} className="bg-red-700 text-white text-2xl px-5 py-2 rounded-lg mt-4 z-10">Explore More</button>
+        <img src={HomeBikeImage} alt="Home Bike" className="h-4/6 z-0 max-w-full" />
+        <button
+          onClick={handleExploreMore}
+          className="bg-red-700 text-white text-xl md:text-2xl px-4 py-2 md:px-5 md:py-2 rounded-lg mt-4 z-10"
+        >
+          Explore More
+        </button>
       </div>
     </div>
   );

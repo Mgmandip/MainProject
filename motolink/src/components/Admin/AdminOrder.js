@@ -332,10 +332,10 @@ const AdminOrder = () => {
                             <strong>User Email:</strong> {order.user?.email || 'N/A'}
                           </p>
                           <p>
-                            <strong>Address:</strong> {order.user?.address || 'N/A'}
+                            <strong>Address:</strong> {order.profile?.address || 'N/A'}
                           </p>
                           <p>
-                            <strong>Phone Number:</strong> {order.user?.number || 'N/A'}
+                            <strong>Phone Number:</strong> {order.profile?.phoneNumber || 'N/A'}
                           </p>
                           <p>
                             <strong>Order Status:</strong> {order.status}

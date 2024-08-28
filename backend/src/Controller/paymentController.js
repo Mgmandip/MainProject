@@ -301,18 +301,20 @@
 //   // payment
 // };
 
-
-
-
-
 const Checkout = require('../Models/paymentModel');
-const Order = require('../Models/orderModel'); // Import the Order model
+const Order = require('../Models/orderModel');
+const Profile = require('../Models/userProfile'); // Import the Profile model
 
-// Create a checkout and corresponding order
 const createCheckout = async (req, res) => {
   try {
     const { bike, name, number, expiration, cvv } = req.body;
     const userId = req.user.id;
+
+    // Fetch the user's profile
+    const userProfile = await Profile.findOne({ user: userId });
+    if (!userProfile) {
+      return res.status(404).json({ message: 'User profile not found' });
+    }
 
     // Create a new Checkout entry (payment)
     const checkout = new Checkout({
@@ -324,28 +326,29 @@ const createCheckout = async (req, res) => {
       cvv,
     });
 
-    await checkout.save(); // Save checkout details in the payment database
+    await checkout.save();
 
     // After successful checkout, create a new Order
     const order = new Order({
       user: userId,
-      bike: bike, // The bike purchased
-      status: 'Pending', // Initial status of the order
+      bike: bike,
+      profile: userProfile._id, // Include the profile ID
+      status: 'Pending',
     });
 
-    await order.save(); // Save the order in the Order database
+    await order.save();
 
     res.status(201).json({
       message: 'Checkout and Order created successfully',
       checkout,
-      order, // Include order details in the response
+      order,
     });
   } catch (error) {
-    // console.error('Error processing checkout and creating order:', error);
-    // res.status(500).json({
-    //   message: 'Error processing checkout',
-    //   error: error.message,
-    // });
+    console.error('Error processing checkout and creating order:', error);
+    res.status(500).json({
+      message: 'Error processing checkout',
+      error: error.message,
+    });
   }
 };
 
